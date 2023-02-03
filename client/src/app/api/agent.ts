@@ -1,8 +1,8 @@
-import axios, {AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { history } from "../..";
 
-const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
+const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
 axios.defaults.withCredentials = true;
@@ -10,7 +10,7 @@ axios.defaults.withCredentials = true;
 const responseBody = (response: AxiosResponse) => response.data;
 
 axios.interceptors.response.use(
-  async response => {
+  async (response) => {
     await sleep();
     return response;
   },
@@ -25,8 +25,8 @@ axios.interceptors.response.use(
         break;
       case 500:
         history.push({
-          pathname: '/server-error',
-          state: {error: data}
+          pathname: "/server-error",
+          state: { error: data },
         });
         toast.error(data.title);
         break;
@@ -58,16 +58,17 @@ const testErrors = {
 };
 
 const Basket = {
-  get: () => requests.get('basket'),
-  addItem: (productId: number, quantity = 1) => requests.post(`basket?productId=${productId}&quantity=${quantity}`,{}),
-  removeItem: (productId: number, quantity = 1) => requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
-
-}
+  get: () => requests.get("basket"),
+  addItem: (productId: number, quantity = 1) =>
+    requests.post(`basket?productId=${productId}&quantity=${quantity}`, {}),
+  removeItem: (productId: number, quantity = 1) =>
+    requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
+};
 
 const agent = {
   Catalog,
   testErrors,
-  Basket
+  Basket,
 };
 
 export default agent;

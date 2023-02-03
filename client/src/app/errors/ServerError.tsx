@@ -1,5 +1,5 @@
 import { Button, Container, Divider, Paper, Typography } from "@mui/material";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function ServerError() {
   const { state } = useLocation<any>();
