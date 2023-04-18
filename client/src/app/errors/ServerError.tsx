@@ -1,8 +1,9 @@
 import { Button, Container, Divider, Paper, Typography } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function ServerError() {
-  const { state } = useLocation<any>();
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
   return (
     <Container component={Paper}>
@@ -25,7 +26,7 @@ export default function ServerError() {
         Server Error
       </Typography>
       <Link to="/catalog">
-        <Button>
+        <Button onClick={() => navigate("/catalog")}>
           <p>Back to catalog!</p>
         </Button>
       </Link>

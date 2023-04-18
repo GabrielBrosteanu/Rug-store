@@ -55,13 +55,7 @@ export default function Header({ darkMode, handleThemeChange }: Props) {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            variant="h6"
-            component={NavLink}
-            to="/"
-            exact
-            sx={navStyle}
-          >
+          <Typography variant="h6" component={NavLink} to="/" sx={navStyle}>
             Bulls
           </Typography>
           <Switch checked={darkMode} onChange={handleThemeChange} />
