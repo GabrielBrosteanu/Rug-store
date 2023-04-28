@@ -16,8 +16,7 @@ export default function AboutPage() {
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   function getValidationError() {
-    agent.testErrors
-      .getValidationError()
+    agent.TestErrors.getValidationError()
       .then(() => console.log("this should not be seen"))
       .catch((error) => setValidationErrors(error));
   }
@@ -31,7 +30,7 @@ export default function AboutPage() {
         <Button
           variant="contained"
           onClick={() =>
-            agent.testErrors.get400Error().catch((error) => console.log(error))
+            agent.TestErrors.get400Error().catch((error) => console.log(error))
           }
         >
           Test 400 error
@@ -39,7 +38,7 @@ export default function AboutPage() {
         <Button
           variant="contained"
           onClick={() =>
-            agent.testErrors.get401Error().catch((error) => console.log(error))
+            agent.TestErrors.get401Error().catch((error) => console.log(error))
           }
         >
           Test 401 error
@@ -47,7 +46,7 @@ export default function AboutPage() {
         <Button
           variant="contained"
           onClick={() =>
-            agent.testErrors.get404Error().catch((error) => console.log(error))
+            agent.TestErrors.get404Error().catch((error) => console.log(error))
           }
         >
           Test 404 error
@@ -55,7 +54,7 @@ export default function AboutPage() {
         <Button
           variant="contained"
           onClick={() =>
-            agent.testErrors.get500Error().catch((error) => console.log(error))
+            agent.TestErrors.get500Error().catch((error) => console.log(error))
           }
         >
           Test 500 error
@@ -64,7 +63,7 @@ export default function AboutPage() {
           Test validation error
         </Button>
       </ButtonGroup>
-      {validationErrors.length > 0 && 
+      {validationErrors.length > 0 && (
         <Alert severity="error">
           <AlertTitle>Validation errors</AlertTitle>
           <List>
@@ -75,7 +74,7 @@ export default function AboutPage() {
             ))}
           </List>
         </Alert>
-      }
+      )}
     </Container>
   );
 }
