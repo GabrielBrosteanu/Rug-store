@@ -9,10 +9,14 @@ import {
 import { useAppSelector } from "../../app/store/configureStore";
 import { currencyFormat } from "../../app/util/util";
 
-export default function BasketSummary() {
-    const { basket } = useAppSelector(state => state.basket);
-    const subtotal = calculateSubtotal();
-    const deliveryFee = subtotal! > 10000 ? 0 : 500;
+interface Props {
+  subtotal?: number;
+}
+
+export default function BasketSummary({ subtotal }: Props) {
+  const { basket } = useAppSelector((state) => state.basket);
+  if (subtotal === undefined) subtotal = calculateSubtotal();
+  const deliveryFee = subtotal! > 10000 ? 0 : 500;
 
   return (
     <>
@@ -29,7 +33,9 @@ export default function BasketSummary() {
             </TableRow>
             <TableRow>
               <TableCell colSpan={2}>Total</TableCell>
-              <TableCell align="right">{currencyFormat(subtotal + deliveryFee)}</TableCell>
+              <TableCell align="right">
+                {currencyFormat(subtotal + deliveryFee)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
@@ -45,10 +51,11 @@ export default function BasketSummary() {
   );
 
   function calculateSubtotal() {
-    const subtotal = basket?.items.reduce(
-      (subtotal, item) => subtotal + (item.price * item.quantity),
-      0
-    ) ?? 0;
+    const subtotal =
+      basket?.items.reduce(
+        (subtotal, item) => subtotal + item.price * item.quantity,
+        0
+      ) ?? 0;
     return subtotal;
   }
 }

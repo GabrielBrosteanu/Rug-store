@@ -3,10 +3,11 @@ import { useState } from "react";
 import { signOut } from "../../features/account/accountSlice";
 import { clearBasket } from "../../features/basket/basketSlice";
 import { useAppDispatch, useAppSelector } from "../store/configureStore";
+import { Link } from "react-router-dom";
 
 export default function SignedInMenu() {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector(state => state.account);
+  const { user } = useAppSelector((state) => state.account);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -20,11 +21,7 @@ export default function SignedInMenu() {
 
   return (
     <>
-      <Button
-        color='inherit'
-        onClick={handleClick}
-        sx={{ typography: 'h6' }}
-      >
+      <Button color="inherit" onClick={handleClick} sx={{ typography: "h6" }}>
         {user?.email}
       </Button>
       <Menu
@@ -34,11 +31,17 @@ export default function SignedInMenu() {
         TransitionComponent={Fade}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem divider onClick={handleClose}>My orders</MenuItem>
-        <MenuItem onClick={() => {
-          dispatch(signOut());
-          dispatch(clearBasket());
-        }}>Logout</MenuItem>
+        <MenuItem component={Link} to="/orders">
+          My orders
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            dispatch(signOut());
+            dispatch(clearBasket());
+          }}
+        >
+          Logout
+        </MenuItem>
       </Menu>
     </>
   );
