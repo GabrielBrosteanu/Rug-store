@@ -10,8 +10,6 @@ primary_region = "otp"
   ASPNETCORE_URLS="http://+:8080"
   StripeSettings__PublishableKey="pk_test_51NLteWE9jHxnSQPXEvcC3QIEDaMBgtPGogpQcaf32iDIULSsvUPBadBERJ0xBDf4ongYz05UlF8CSjzMXYWxzc8M00hMQYxIWl"
 
-
-
 [build]
   image = "hafthor98/rugstore:latest"
 
