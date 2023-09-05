@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { useAppSelector } from "../../app/store/configureStore";
 import BasketSummary from "./BasketSummary";
 import BasketTable from "./BasketTable";
 
