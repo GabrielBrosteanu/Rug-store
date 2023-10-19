@@ -14,6 +14,18 @@ const initialState: AccountState = {
   user: null,
 };
 
+function decodeJWT(token) {
+  const tokenData = token.split(".")[1];
+  const decodedToken = atob(tokenData);
+  return JSON.parse(decodedToken);
+}
+
+function extractRoles(claims) {
+  const roles =
+    claims["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+  return typeof roles === "string" ? [roles] : roles;
+}
+
 export const signInUser = createAsyncThunk<User, FieldValues>(
   "account/signInUser",
   async (data, thunkAPI) => {
@@ -60,7 +72,12 @@ export const accountSlice = createSlice({
       router.navigate("/");
     },
     setUser: (state, action) => {
-      state.user = action.payload;
+      const claims = decodeJWT(action.payload.token);
+      const roles = extractRoles(claims);
+      state.user = {
+        ...action.payload,
+        roles: roles,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -73,8 +90,12 @@ export const accountSlice = createSlice({
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
       (state, action) => {
-        console.log(action);
-        state.user = action.payload;
+        const claims = decodeJWT(action.payload.token);
+        const roles = extractRoles(claims);
+        state.user = {
+          ...action.payload,
+          roles: roles,
+        };
       }
     );
     builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {
